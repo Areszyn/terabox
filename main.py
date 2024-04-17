@@ -20,7 +20,7 @@ import motor.motor_asyncio
 loop = asyncio.get_event_loop()
 
 client = motor.motor_asyncio.AsyncIOMotorClient("mongodb+srv://video:video@cluster0.suiny.mongodb.net/")
-db = client.rest  # Replace "your_database" with the name of your MongoDB database
+db = client.nest  # Replace "your_database" with the name of your MongoDB database
 file_collection = db.file
 usersdb = db.users
 urldb = db.urls
@@ -446,12 +446,15 @@ async def terabox_dm(client, message):
               return await message.reply_text("First Join @CheemsBackup to Use me")
         if not await tokendb.find_one({"chat_id": message.from_user.id}):
               return await token_fun(client, message)
-        try:
-            user_id = int(message.from_user.id)
-            if user_id in queue_url:
-                 return await message.reply_text("Already One Url is Processing pls wait for it to Complete.")
-            queue_url[user_id] = True
+        try:          
             for url in urls:
+                user_id = int(message.from_user.id)
+                if user_id in queue_url and str(url) in queue_url[user_id]:
+                        await message.reply_text("This Url is Already In Process Wait")
+                        continue
+                if user_id not in queue_url:
+                     queue_url[user_id] = {}
+                queue_url[user_id][url] = True
                 if not await check_url_patterns_async(str(url)):
                     await message.reply_text("⚠️ Not a valid Terabox URL!", quote=True)
                     continue
@@ -482,7 +485,7 @@ async def terabox_dm(client, message):
                          ril = await client.send_video(-1002069870125, dlink, caption="Indian")
                          file_id = (ril.video.file_id if ril.video else (ril.document.file_id if ril.document else (ril.animation.file_id if ril.animation else (ril.sticker.file_id if ril.sticker else (ril.photo.file_id if ril.photo else ril.audio.file_id if ril.audio else None)))))
                          unique_id = (ril.video.file_unique_id if ril.video else (ril.document.file_unique_id if ril.document else (ril.animation.file_unique_id if ril.animation else (ril.sticker.file_unique_id if ril.sticker else (ril.photo.file_unique_id if ril.photo else ril.audio.file_unique_id if ril.audio else None)))))                         
-                         direct_url = f"https://t.me/teradlrobot?start=unqid{unique_id}"
+                         direct_url = f"https://t.me/teraboxleechbot?start=unqid{unique_id}"
                          await ril.copy(message.chat.id, caption=f"**Title**: `{name}`\n**Size**: `{size}`\n\n**Direct File Link**: {direct_url}")
                          await nil.edit_text("Completed")
                          await store_file(unique_id, file_id)
@@ -501,7 +504,7 @@ async def terabox_dm(client, message):
                                 ril = await client.send_video(-1002069870125, vid_path, thumb=thumb_path, caption="Indian")
                                 file_id = (ril.video.file_id if ril.video else (ril.document.file_id if ril.document else (ril.animation.file_id if ril.animation else (ril.sticker.file_id if ril.sticker else (ril.photo.file_id if ril.photo else ril.audio.file_id if ril.audio else None)))))
                                 unique_id = (ril.video.file_unique_id if ril.video else (ril.document.file_unique_id if ril.document else (ril.animation.file_unique_id if ril.animation else (ril.sticker.file_unique_id if ril.sticker else (ril.photo.file_unique_id if ril.photo else ril.audio.file_unique_id if ril.audio else None)))))                     
-                                direct_url = f"https://t.me/teradlrobot?start=unqid{unique_id}"
+                                direct_url = f"https://t.me/teraboxleechbot?start=unqid{unique_id}"
                                 await ril.copy(message.chat.id, caption=f"**Title**: `{name}`\n**Size**: `{size}`\n\n**Direct File Link**: {direct_url}")
                                 await nil.edit_text("Completed")                              
                                 await store_file(unique_id, file_id)
