@@ -482,7 +482,7 @@ async def terabox_dm(client, message):
                     name, size, size_bytes, dlink, thumb  = await get_data(link)
                     if dlink:
                       try:                        
-                         ril = await client.send_video(-1002069870125, dlink, caption="Indian")
+                         ril = await client.send_video(-1002117106922, dlink, caption="Indian")
                          file_id = (ril.video.file_id if ril.video else (ril.document.file_id if ril.document else (ril.animation.file_id if ril.animation else (ril.sticker.file_id if ril.sticker else (ril.photo.file_id if ril.photo else ril.audio.file_id if ril.audio else None)))))
                          unique_id = (ril.video.file_unique_id if ril.video else (ril.document.file_unique_id if ril.document else (ril.animation.file_unique_id if ril.animation else (ril.sticker.file_unique_id if ril.sticker else (ril.photo.file_unique_id if ril.photo else ril.audio.file_unique_id if ril.audio else None)))))                         
                          direct_url = f"https://t.me/teraboxleechbot?start=unqid{unique_id}"
@@ -501,7 +501,7 @@ async def terabox_dm(client, message):
                              try:
                                 vid_path = await download_file(dlink, name)
                                 thumb_path = await download_thumb(thumb)                                                                                       
-                                ril = await client.send_video(-1002069870125, vid_path, thumb=thumb_path, caption="Indian")
+                                ril = await client.send_video(-1002117106922, vid_path, thumb=thumb_path, caption="Indian")
                                 file_id = (ril.video.file_id if ril.video else (ril.document.file_id if ril.document else (ril.animation.file_id if ril.animation else (ril.sticker.file_id if ril.sticker else (ril.photo.file_id if ril.photo else ril.audio.file_id if ril.audio else None)))))
                                 unique_id = (ril.video.file_unique_id if ril.video else (ril.document.file_unique_id if ril.document else (ril.animation.file_unique_id if ril.animation else (ril.sticker.file_unique_id if ril.sticker else (ril.photo.file_unique_id if ril.photo else ril.audio.file_unique_id if ril.audio else None)))))                     
                                 direct_url = f"https://t.me/teraboxleechbot?start=unqid{unique_id}"
