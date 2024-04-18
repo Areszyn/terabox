@@ -21,11 +21,12 @@ loop = asyncio.get_event_loop()
 
 client = motor.motor_asyncio.AsyncIOMotorClient("mongodb+srv://video:video@cluster0.suiny.mongodb.net/")
 db = client.nest  # Replace "your_database" with the name of your MongoDB database
+rb = client.rest
 file_collection = db.file
 usersdb = db.users
 urldb = db.urls
 tokendb = db.token
-rokendb = db.roken
+rokendb = rb.roken
 
 API_ID = "6"
 API_HASH = "eb06d4abfb49dc3eeb1aeb98ae0f581e"
