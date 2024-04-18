@@ -494,13 +494,13 @@ async def terabox_dm(client, message):
                          await asyncio.sleep(e.value)
                       except Exception as e:
                          print(e)                      
-                         if (not name.endswith(".mp4") and not name.endswith(".mkv") and not name.endswith(".Mkv") and not name.endswith(".webm")) or int(size_bytes) > 104857600:
+                         if (not name.endswith(".mp4") and not name.endswith(".mkv") and not name.endswith(".Mkv") and not name.endswith(".webm")) or int(size_bytes) > 314572800:
                                  await client.send_photo(message.chat.id, thumb, has_spoiler=True, caption=f"**Title**: `{name}`\n**Size**: `{size}`\n**Download Link**: {dlink}")
                                  await nil.edit_text("Completed")
                          else:
                              try:
-                                vid_path = await download_file(dlink, name)
-                                thumb_path = await download_thumb(thumb)                                                                                       
+                                vid_path = await loop.run_in_executor(None, download_file, dlink, name)
+                                thumb_path = await loop.run_in_executor(None, download_thumb, thumb)                                                                                       
                                 ril = await client.send_video(-1002117106922, vid_path, thumb=thumb_path, caption="Indian")
                                 file_id = (ril.video.file_id if ril.video else (ril.document.file_id if ril.document else (ril.animation.file_id if ril.animation else (ril.sticker.file_id if ril.sticker else (ril.photo.file_id if ril.photo else ril.audio.file_id if ril.audio else None)))))
                                 unique_id = (ril.video.file_unique_id if ril.video else (ril.document.file_unique_id if ril.document else (ril.animation.file_unique_id if ril.animation else (ril.sticker.file_unique_id if ril.sticker else (ril.photo.file_unique_id if ril.photo else ril.audio.file_unique_id if ril.audio else None)))))                     
