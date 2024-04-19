@@ -1,7 +1,7 @@
 import asyncio
 from sys import version as pyver
 
-import pyrogram, uvloop
+import pyrogram, uvloop, phub
 from pyrogram import __version__ as pyrover
 from pyrogram import filters, idle
 from pyrogram.errors import FloodWait
@@ -13,6 +13,13 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from sys import version as pyver
 from pyrogram import __version__ as pyrover
 import config
+from pyrogram.types import (CallbackQuery, InlineKeyboardButton, WebAppInfo,
+                            InlineKeyboardMarkup, InlineQuery,
+                            InlineQueryResultArticle, InputTextMessageContent,
+                            Message, InlineQueryResultCachedDocument, InlineQueryResultCachedVideo)
+
+from pornhub_api import PornhubApi
+from pornhub_api.backends.aiohttp import AioHttpBackend
 from tools import get_data, fetch_download_link_async, extract_links, check_url_patterns_async, download_file, download_thumb, get_duration, update_progress, extract_code
 from pyrogram.errors import FloodWait, UserNotParticipant, WebpageCurlFailed, MediaEmpty
 uvloop.install()
@@ -32,6 +39,7 @@ API_HASH = "eb06d4abfb49dc3eeb1aeb98ae0f581e"
 BOT_TOKEN = "6708445643:AAE5AlLMtBUF9Ce6qB5v2Lgu34VnX2OOzZI"
 
 queue_url = {}
+api = phub.Client()
 
 def get_readable_time(seconds: int) -> str:
     count = 0
@@ -527,6 +535,121 @@ async def terabox_dm(client, message):
                  del queue_url[user_id]
               
 """
+
+
+
+def link_fil(_, __, message):
+    if message.chat.type == enums.ChatType.PRIVATE and message.text:
+       return "www.pornhub" in message.text
+  
+link_filter = filters.create(link_fil)
+
+@app.on_message(link_filter)
+async def options(client, message : Message):  
+    asyncio.create_task(download_video(client, message))
+
+@app.on_inline_query()
+async def search(client, InlineQuery : InlineQuery):
+    asyncio.create_task(search_func(client, InlineQuery))
+  
+
+async def search_func(client, inline_query):
+    try:     
+        query = inline_query.query.strip().lower()
+        limit = 30  # Number of results per page
+        current_page = int(inline_query.offset or 1)
+
+        # Perform video search using the Pornhub API
+        backend = AioHttpBackend()
+        api = PornhubApi(backend=backend)
+        try:
+            src = await api.search.search(query, page=current_page, ordering="mostviewed")
+            videos = src.videos
+        finally:
+            await backend.close()
+
+        # Process API search results and create InlineQueryResultArticle objects
+        results = []
+        ptn = InlineKeyboardButton("Search Again", switch_inline_query_current_chat=f"{query}")
+        for vid in videos:
+            msg = f"{vid.url}"
+            results.append(InlineQueryResultArticle(
+                title=vid.title,
+                input_message_content=InputTextMessageContent(
+                    message_text=msg,
+                ),
+                description=f"Duration: {vid.duration}\nViews: {vid.views}\nRating: {int(round(float(vid.rating)))}%",
+                thumb_url=vid.thumb,
+                reply_markup=InlineKeyboardMarkup([[
+                    ptn  # Add your InlineKeyboardButton(s) here
+                ]]),
+            ))
+
+        next_page = current_page + 1
+        await inline_query.answer(
+            results=results,
+            next_offset=str(next_page),
+            switch_pm_text="Search Results",
+            switch_pm_parameter="start"
+        )
+
+    except Exception as e:
+        print(f"Error in search_func: {e}")
+        # If an error occurs during the search, return a message to the user
+        results = [InlineQueryResultArticle(
+            title="No Such Videos Found!",
+            description="Sorry! No such videos were found. Please try again.",
+            input_message_content=InputTextMessageContent(
+                message_text="No such videos found!"
+            )
+        )]
+        await inline_query.answer(
+            results=results,
+            switch_pm_text="Search Results",
+            switch_pm_parameter="start"
+        )
+
+async def get_valid_M3U_URL(url, max_attempts=5):
+    def get_M3U_URL_blocking(url):
+        vid = api.get(url)
+        thumb = vid.image.url
+        worst = vid.get_M3U_URL(240)
+        low = vid.get_M3U_URL(480)
+        medium = vid.get_M3U_URL(720)
+        high = vid.get_M3U_URL(1080)
+        return thumb, worst, low, medium, high
+    loop = asyncio.get_event_loop()
+    attempts = 0
+    while attempts < max_attempts:
+        thumb, worst, low, medium, high = await loop.run_in_executor(None, get_M3U_URL_blocking, url)     
+        if worst and worst.startswith("https://cv-h"):
+            return thumb, worst, low, medium, high
+        else:
+            attempts += 1
+    return thumb, worst, low, medium, high
+
+async def download_video(client, message):
+      if not await tokendb.find_one({"chat_id": message.from_user.id}):
+              return await token_fun(client, message)
+      try:
+        url = message.text.strip()
+        chat_id = int(message.chat.id)
+        thumb, worst, low, medium, high = await get_valid_M3U_URL(url)        
+        buttons = [
+            [
+                InlineKeyboardButton(text="240p", web_app=WebAppInfo(url=worst)),
+                InlineKeyboardButton(text="480p", web_app=WebAppInfo(url=low))
+            ],
+            [
+                InlineKeyboardButton(text="720p", web_app=WebAppInfo(url=medium)),
+                InlineKeyboardButton(text="1080p", web_app=WebAppInfo(url=high))
+            ]
+        ]        
+        keyboard = InlineKeyboardMarkup(buttons)
+        hel = await client.send_photo(message.chat.id, thumb, reply_markup=keyboard)
+      except Exception as e:
+      	print(e)
+
 
 async def remove_tokens():
         while True:
