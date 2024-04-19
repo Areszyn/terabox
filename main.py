@@ -536,6 +536,11 @@ async def terabox_dm(client, message):
               
 """
 
+@app.on_message(filters.command("pornhub") & filters.private)
+async def hen(client, message : Message):
+    btn = InlineKeyboardButton("Search Here",switch_inline_query_current_chat="")
+    await message.reply_text("Search Pornhub Videos", reply_markup=InlineKeyboardMarkup([[btn]]))
+
 
 @app.on_inline_query()
 async def search(client, InlineQuery : InlineQuery):
@@ -549,7 +554,9 @@ def link_fil(_, __, message):
 link_filter = filters.create(link_fil)
 
 @app.on_message(link_filter)
-async def options(client, message : Message):  
+async def options(client, message : Message):
+    if not await is_join(message.from_user.id):
+           return await message.reply_text("First Join @CheemsBackup to Use me")
     asyncio.create_task(download_video(client, message))
 
 
