@@ -539,7 +539,7 @@ async def terabox_dm(client, message):
 @app.on_message(filters.command("pornhub") & filters.private)
 async def hen(client, message : Message):
     btn = InlineKeyboardButton("Search Here",switch_inline_query_current_chat="")
-    await message.reply_text("Search Pornhub Videos", reply_markup=InlineKeyboardMarkup([[btn]]))
+    await message.reply_text("Search Pornhub Videos\n\nVideo Tutorial: [here](https://graph.org/file/b56b5c4cc33f6c6500e0d.mp4)", disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup([[btn]]))
 
 
 @app.on_inline_query()
