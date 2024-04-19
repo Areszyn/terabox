@@ -537,6 +537,10 @@ async def terabox_dm(client, message):
 """
 
 
+@app.on_inline_query()
+async def search(client, InlineQuery : InlineQuery):
+    asyncio.create_task(search_func(client, InlineQuery))
+
 
 def link_fil(_, __, message):
     if message.chat.type == enums.ChatType.PRIVATE and message.text:
@@ -548,10 +552,6 @@ link_filter = filters.create(link_fil)
 async def options(client, message : Message):  
     asyncio.create_task(download_video(client, message))
 
-@app.on_inline_query()
-async def search(client, InlineQuery : InlineQuery):
-    asyncio.create_task(search_func(client, InlineQuery))
-  
 
 async def search_func(client, inline_query):
     try:     
