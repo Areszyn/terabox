@@ -12,3 +12,5 @@ requests
 aiohttp
 gitpython
 humanfriendly
+phub
+pornhub-api[aiohttp-backend]
