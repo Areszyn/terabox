@@ -268,7 +268,7 @@ async def tera_private(client, message):
 
 
 async def terabox_dm(client, message):
-        urls = extract_links(message.text or message.caption)
+        urls = await extract_links(message.text or message.caption)
         if not urls:
           return await message.reply_text("No Urls Found")
         if not await is_join(message.from_user.id):
