@@ -308,7 +308,7 @@ async def terabox_dm(client, message):
                    await message.reply_text("Some Error Occurred", quote=True)
                    continue 
                 for link in link_data:
-                    name, size, size_bytes, dlink, thumb  = await get_data(link)
+                    name, size, size_bytes, dlink, thumb, dlink2 = await get_data(link)
                     if dlink:
                       try:                        
                          ril = await client.send_video(-1002117106922, dlink, caption="Indian")
@@ -323,7 +323,7 @@ async def terabox_dm(client, message):
                            await asyncio.sleep(e.value)
                       except Exception as e:
                          print(e)
-                         await client.send_photo(message.chat.id, thumb, has_spoiler=True, caption=f"**Title**: `{name}`\n**Size**: `{size}`\n**Download Link**: [Link]({dlink})")
+                         await client.send_photo(message.chat.id, thumb, has_spoiler=True, caption=f"**Title**: `{name}`\n**Size**: `{size}`\n**Download Link**: [Link]({dlink})\n**Download Link 2**: [Link]({dlink2})")
                          await nil.edit_text("Completed")
         except FloodWait as e:
             await asyncio.sleep(e.value)
