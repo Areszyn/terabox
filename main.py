@@ -323,7 +323,7 @@ async def terabox_dm(client, message):
                            await asyncio.sleep(e.value)
                       except Exception as e:
                          print(e)
-                         await client.send_photo(message.chat.id, thumb, has_spoiler=True, caption=f"**Title**: `{name}`\n**Size**: `{size}`\n**Download Link**: {dlink}")
+                         await client.send_photo(message.chat.id, thumb, has_spoiler=True, caption=f"**Title**: `{name}`\n**Size**: `{size}`\n**Download Link**: [Link]({dlink})")
                          await nil.edit_text("Completed")
         except FloodWait as e:
             await asyncio.sleep(e.value)
