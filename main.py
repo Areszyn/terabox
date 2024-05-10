@@ -308,7 +308,7 @@ async def terabox_dm(client, message):
                    await message.reply_text("Some Error Occurred", quote=True)
                    continue 
                 for link in link_data:
-                    name, size, size_bytes, dlink, thumb  = await get_data(link)
+                    name, size, size_bytes, dlink, dlink2, thumb  = await get_data(link)
                     if dlink:
                       try:                        
                          ril = await client.send_video(-1002117106922, dlink, caption="Indian")
@@ -323,8 +323,7 @@ async def terabox_dm(client, message):
                            await asyncio.sleep(e.value)
                       except Exception as e:
                          print(e)
-                         rtn = InlineKeyboardButton("Watch", web_app=WebAppInfo(url=f"https://terabox-http.vercel.app/stream.m3u8?url={url}"))
-                         await client.send_photo(message.chat.id, thumb, has_spoiler=True, caption=f"**Title**: `{name}`\n**Size**: `{size}`\n**Download Link**: [Link]({dlink})", reply_markup=InlineKeyboardMarkup([[rtn]]))
+                         await client.send_photo(message.chat.id, thumb, has_spoiler=True, caption=f"**Title**: `{name}`\n**Size**: `{size}`\n**Download Link V1**: [Link]({dlink})\n**Download Link V2**: [Link]({dlink2})\n**How To Watch Video**: [Here](https://t.me/TeraBoxHelper/2)")
                          await nil.edit_text("Completed")
         except FloodWait as e:
             await asyncio.sleep(e.value)
