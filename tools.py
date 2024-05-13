@@ -264,10 +264,10 @@ async def get_direct_link(url):
             response.raise_for_status()
             direct_link = response.headers.get('Location')
             download_link = "https://d3.terabox.app" + direct_link[direct_link.index("/", 8):]
-            return download_link            
+            return direct_link, download_link            
     except Exception as e:
         print(f"Error fetching direct link: {e}")
-        return None
+        return None, None
     finally:
         await my_session.close()
       
@@ -277,7 +277,7 @@ async def get_data(link_data):
   try:
     file_name = link_data["server_filename"]
     file_size = await get_formatted_size_async(link_data["size"])
-    download_link = await get_direct_link(link_data["dlink"])
+    direct_link, download_link = await get_direct_link(link_data["dlink"])
     if not download_link:
         download_link = await get_url(link_data["dlink"])
         if not download_link:
@@ -285,10 +285,10 @@ async def get_data(link_data):
            download_link = url + link_data["dlink"][link_data["dlink"].index("/", 8):]
    # download_link = await shorten_url(download_link)
     thumb = link_data["thumbs"]["url3"]
-    return file_name, file_size, link_data["size"], download_link, link_data["dlink"], thumb
+    return file_name, file_size, link_data["size"], download_link, link_data["dlink"], direct_link, thumb
   except Exception as e:
     print(e)
-    return None, None, None, None, None, None
+    return None, None, None, None, None, None, None
 
 async def extract_links(message):
     # fetch all links
