@@ -171,7 +171,7 @@ async def create_session():
     'Cache-Control': 'max-age=0',
     'Connection': 'keep-alive',
     'Cookie': 'browserid=khXCS03TzvdACGfWjfD-9fdJBWCd83okmrk0apGAEPjCXVWWeTWXwdqk0fU=; _ga=GA1.1.1811415982.1710434419; __stripe_mid=759ba489-0c3b-40da-a098-dd7ab307d05c9f299d; __bid_n=18e8bfdfc3be4ea4224207; lang=en; __stripe_mid=759ba489-0c3b-40da-a098-dd7ab307d05c9f299d; csrfToken=kqtlz0KRLCuoxJ4W1CutP0y-; __stripe_sid=f1542c6b-3aa9-4c3c-b60e-c72802b4753c91b583; ndus=Yv0ZdKyteHuijT_obd4WajHZvkg1emwdPhgzKah5; ndut_fmt=557F3BC5845026BD0FA23A88E3913CD2EDBFC1EE08FC1D9441F9154B39EF9B0F; ab_sr=1.0.1_Njc4YmE3N2RiN2E2NWJiMWFlM2Q3ZDQxODBjMDcwMTI5ZDBkZjgxNTE0OTAwMzRhODQ5YTlmZTg1OTEyMmE3ZDJhZWQ1ZjE3Zjg2OTE0ZjEyOGU2OTgxNzg3OWRiM2YyOWM3YjI0NzU2NjQ4OTk4YTE1YjExMzkyNGQ3NjM1ODU3ZmZhMTU3MTVkNTAwOGQ0ZWI5ZDMyZDczY2Q0NDEyZQ==; ab_ymg_result={"data":"51efd8e827622b901b5291710e3f479af93425d3a89d6f8793c27d26b13659ff548d08cfb4ddf15e132832d8ad92461b3874c271a817a2320ff28d409317ef5b7abec2c76d4a90de79e1a35acfbf432c4bebc3500045ed1907b00e03b125bc197b6c068a04f77eae98cd647c5c882f59d57723f1418ab2de09bd00b39fb685a3","key_id":"66","sign":"31bbf983"}; _ga_06ZNKL8C2E=GS1.1.1714966902.5.1.1714966985.47.0.0',
-    'Referer': 'https://www.terabox.app/',
+    'Referer': 'https://www.freeterabox.com/',
     'Sec-Fetch-Dest': 'document',
     'Sec-Fetch-Mode': 'navigate',
     'Sec-Fetch-Site': 'same-origin',
@@ -216,7 +216,7 @@ async def fetch_download_link_async(url):
                 'root': '1'
             }
 
-            async with my_session.get('https://www.terabox.app/share/list', params=params) as response2:
+            async with my_session.get('https://www.freeterabox.com/share/list', params=params) as response2:
                 response_data2 = await response2.json()
                 if 'list' not in response_data2:
                     return None
@@ -229,7 +229,7 @@ async def fetch_download_link_async(url):
                     })
                     params.pop('desc')
                     params.pop('root')
-                    async with my_session.get('https://www.terabox.app/share/list', params=params) as response3:
+                    async with my_session.get('https://www.freeterabox.com/share/list', params=params) as response3:
                         response_data3 = await response3.json()
                         if 'list' not in response_data3:
                             return None
