@@ -36,7 +36,7 @@ rokendb = db.roken
 
 API_ID = "6"
 API_HASH = "eb06d4abfb49dc3eeb1aeb98ae0f581e"
-BOT_TOKEN = "6708445643:AAE5AlLMtBUF9Ce6qB5v2Lgu34VnX2OOzZI"
+BOT_TOKEN = "6708445643:AAElR_1Dwup_61l4GZ0fXNH-y61uRz1EzL0"
 
 queue_url = {}
 api = phub.Client()
