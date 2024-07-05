@@ -15,20 +15,20 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Get it from my.telegram.org
-API_ID = int(getenv("API_ID", "6"))
-API_HASH = getenv("API_HASH", "eb06d4abfb49dc3eeb1aeb98ae0f581e")
+API_ID = int(getenv("API_ID", "22505271"))
+API_HASH = getenv("API_HASH", "c89a94fcfda4bc06524d0903977fc81e")
 
 ## Get it from @Botfather in Telegram.
-BOT_TOKEN = getenv("BOT_TOKEN", "6259808692:AAE7Lt1J2CLvm2A0tN-KRgtB8GqyREmCCD4")
+BOT_TOKEN = getenv("BOT_TOKEN", "")
 
 # SUDO USERS
 SUDO_USER = list(
-    map(int, getenv("SUDO_USER", "5545068262").split())
+    map(int, getenv("SUDO_USER", "6020516635").split())
 )  # Input type must be interger
 
 # ADMIN USERS
 ADMIN_USER = list(
-    map(int, getenv("ADMIN_USER", "5545068262").split())
+    map(int, getenv("ADMIN_USER", "6020516635").split())
 )  # Input type must be interger
 
 # Message to display when someone starts your bot
