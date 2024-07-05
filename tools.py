@@ -317,8 +317,8 @@ async def find_between(string, start, end):
     return string[start_index:end_index]
 
 async def shorten_url(long_url):
-    api_key = '26LFT5xlnvMbhEwux1LCDvftvss2'
-    api_url = f"https://api.shareus.io/easy_api?key={api_key}&link={long_url}"
+    api_key = 'f6bca6c218ba619daf2f6f292106978bc2a5b185'
+    api_url = f"https://ziplinker.net/easy_api?key={api_key}&link={long_url}"
     try:
         async with aiohttp.ClientSession() as session:
             async with session.get(api_url) as response:
@@ -345,7 +345,7 @@ async def extract_code(url: str):
 
 
 async def shorten_url_async(destination_link):
-    api_url = f'https://adrinolinks.in/api?api=bd1171dd3ccb6e43fc6e31876df0871a29e9c794&url={destination_link}'
+    api_url = f'https://ziplinker.net/api?api=f6bca6c218ba619daf2f6f292106978bc2a5b185&url={destination_link}'
     try:
         async with aiohttp.ClientSession() as session:
             async with session.get(api_url) as response:
