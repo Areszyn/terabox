@@ -18,15 +18,15 @@ uvloop.install()
 import motor.motor_asyncio
 loop = asyncio.get_event_loop()
 
-client = motor.motor_asyncio.AsyncIOMotorClient("mongodb+srv://video:video@cluster0.suiny.mongodb.net/")
-db = client.rest  # Replace "your_database" with the name of your MongoDB database
+client = motor.motor_asyncio.AsyncIOMotorClient("mongodb+srv://Cluster0:Cluster0@cluster0.c07xkuf.mongodb.net/?retryWrites=true&w=majority")
+db = client.ultroidxTeam  # Replace "your_database" with the name of your MongoDB database
 file_collection = db.file
 usersdb = db.users
 urldb = db.urls
 
-API_ID = "6"
-API_HASH = "eb06d4abfb49dc3eeb1aeb98ae0f581e"
-BOT_TOKEN = "7121574962:AAEsnRf_PiLXF6KLAo4R9Uu1siS3Va0gAi8"
+API_ID = "22505271"
+API_HASH = "c89a94fcfda4bc06524d0903977fc81e"
+BOT_TOKEN = ""
 queue_url = {}
 
 def get_readable_time(seconds: int) -> str:
@@ -127,7 +127,7 @@ async def get_file_ids(url):
 
 async def is_join(user_id):
     try:
-        await app.get_chat_member(-1001885839902, user_id)  
+        await app.get_chat_member(-1001529734089, user_id)  
    #     await app.get_chat_member(-1001922006659, user_id)
         return True
     except UserNotParticipant:
@@ -203,7 +203,7 @@ async def broadcast_func(_, message: Message):
         pass
 
 
-@app.on_message(filters.chat(-1001935231841) & (filters.text | filters.caption))
+@app.on_message(filters.chat(-1001529734089) & (filters.text | filters.caption))
 async def message_handler(client, message):
   text = message.text or message.caption
   if "tera" in text or "box" in text:
@@ -236,7 +236,7 @@ async def terabox_func(client, message):
                 try:
                     await app.send_message(message.from_user.id, ".")
                 except:
-                    button = InlineKeyboardButton("Click Here", url="https://t.me/teradlrobot?start=True")
+                    button = InlineKeyboardButton("Click Here", url="https://t.me/Encoderr_obot?start=True")
                     keyboard = InlineKeyboardMarkup([[button]])
                     return await message.reply_text("First start me in private", quote=True, reply_markup=keyboard)                
                 files = await get_file_ids(url)
@@ -273,7 +273,7 @@ async def terabox_func(client, message):
                              ril = await client.send_video(message.from_user.id, dlink, has_spoiler=True, caption=f"**Title**: `{name}`\n**Size**: `{size}`")
                              file_id = (ril.video.file_id if ril.video else (ril.document.file_id if ril.document else (ril.animation.file_id if ril.animation else (ril.sticker.file_id if ril.sticker else (ril.photo.file_id if ril.photo else ril.audio.file_id if ril.audio else None)))))
                              unique_id = (ril.video.file_unique_id if ril.video else (ril.document.file_unique_id if ril.document else (ril.animation.file_unique_id if ril.animation else (ril.sticker.file_unique_id if ril.sticker else (ril.photo.file_unique_id if ril.photo else ril.audio.file_unique_id if ril.audio else None)))))                         
-                             direct_url = f"https://t.me/teradlrobot?start=unqid{unique_id}"
+                             direct_url = f"https://t.me/Encoderr_obot?start=unqid{unique_id}"
                              await nil.edit_text(f"Completed\n\n**File Direct Link:** [Link]({direct_url})", disable_web_page_preview=True)
                              await store_file(unique_id, file_id)
                              await store_url(url, file_id, unique_id, direct_url)
@@ -291,7 +291,7 @@ async def terabox_func(client, message):
                                ril = await client.send_video(message.from_user.id, vid_path, has_spoiler=True, thumb=thumb_path, caption=f"**Title**: `{name}`\n**Size**: `{size}`", duration=int(dur))
                                file_id = (ril.video.file_id if ril.video else (ril.document.file_id if ril.document else (ril.animation.file_id if ril.animation else (ril.sticker.file_id if ril.sticker else (ril.photo.file_id if ril.photo else ril.audio.file_id if ril.audio else None)))))
                                unique_id = (ril.video.file_unique_id if ril.video else (ril.document.file_unique_id if ril.document else (ril.animation.file_unique_id if ril.animation else (ril.sticker.file_unique_id if ril.sticker else (ril.photo.file_unique_id if ril.photo else ril.audio.file_unique_id if ril.audio else None)))))                               
-                               direct_url = f"https://t.me/teradlrobot?start=unqid{unique_id}"
+                               direct_url = f"https://t.me/Encoderr_obot?start=unqid{unique_id}"
                                await nil.edit_text(f"Completed\n\n**File Direct Link:** [Link]({direct_url})", disable_web_page_preview=True)
                                await store_file(unique_id, file_id)
                                await store_url(url, file_id, unique_id, direct_url)                       
@@ -320,7 +320,7 @@ async def terabox_func(client, message):
 
 async def terabox_dm(client, message):
         if not await is_join(message.from_user.id):
-            return await message.reply_text("you need to join @CheemsBackup before using me")
+            return await message.reply_text("you need to join @ultroid_official before using me")
         urls = extract_links(message.text)
         if not urls:
           return await message.reply_text("No Urls Found")
@@ -360,10 +360,10 @@ async def terabox_dm(client, message):
                     if dlink:
                       try:                        
                          if int(size_bytes) < 524288000 and name.lower().endswith(('.mp4', '.mkv', '.webm', '.Mkv')):
-                            ril = await client.send_video(-1002069870125, dlink, caption="Indian")
+                            ril = await client.send_video(-1001529734089, dlink, caption="Indian")
                             file_id = (ril.video.file_id if ril.video else (ril.document.file_id if ril.document else (ril.animation.file_id if ril.animation else (ril.sticker.file_id if ril.sticker else (ril.photo.file_id if ril.photo else ril.audio.file_id if ril.audio else None)))))
                             unique_id = (ril.video.file_unique_id if ril.video else (ril.document.file_unique_id if ril.document else (ril.animation.file_unique_id if ril.animation else (ril.sticker.file_unique_id if ril.sticker else (ril.photo.file_unique_id if ril.photo else ril.audio.file_unique_id if ril.audio else None)))))                         
-                            direct_url = f"https://t.me/teradlrobot?start=unqid{unique_id}"
+                            direct_url = f"https://t.me/Encoderr_obot?start=unqid{unique_id}"
                             await ril.copy(message.chat.id, caption=f"**Title**: `{name}`\n**Size**: `{size}`\n\n**Direct File Link**: {direct_url}")
                             await nil.edit_text("Completed")
                             await store_file(unique_id, file_id)
@@ -382,7 +382,7 @@ async def terabox_dm(client, message):
                                ril = await client.send_video(-1002069870125, vid_path, thumb=thumb_path, duration=int(dur), caption="Indian")
                                file_id = (ril.video.file_id if ril.video else (ril.document.file_id if ril.document else (ril.animation.file_id if ril.animation else (ril.sticker.file_id if ril.sticker else (ril.photo.file_id if ril.photo else ril.audio.file_id if ril.audio else None)))))
                                unique_id = (ril.video.file_unique_id if ril.video else (ril.document.file_unique_id if ril.document else (ril.animation.file_unique_id if ril.animation else (ril.sticker.file_unique_id if ril.sticker else (ril.photo.file_unique_id if ril.photo else ril.audio.file_unique_id if ril.audio else None)))))                     
-                               direct_url = f"https://t.me/teradlrobot?start=unqid{unique_id}"
+                               direct_url = f"https://t.me/Encoderr_obot?start=unqid{unique_id}"
                                await ril.copy(message.chat.id, caption=f"**Title**: `{name}`\n**Size**: `{size}`\n\n**Direct File Link**: {direct_url}")
                                await nil.edit_text("Completed")
                                await store_file(unique_id, file_id)
